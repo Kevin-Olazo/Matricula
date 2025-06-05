@@ -45,7 +45,7 @@ public class Inicio extends JFrame {
 	private void crearCardLayout() {
 		cardLayout = new CardLayout();
 		cardPanel = new JPanel(cardLayout);
-
+		System.out.println("First commit");
 		cardPanel.add(crearMenuPrincipal(), "PanelMenu");
 		cardPanel.add(crearPanelMantenimiento(), "PanelMantenimiento");		
 		cardPanel.add(crearPanelConsulta(), "PanelConsulta");

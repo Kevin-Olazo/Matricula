@@ -2,7 +2,6 @@ package matricula;
 
 import java.awt.CardLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,14 +23,14 @@ public class Inicio extends JFrame {
 	private ListaRegistro listaRegistro = new ListaRegistro();
 	private JScrollPane scrollPane;
 	private JTable tablaAlumnos;
-	private JTextArea txtS;	
+	private JTextArea txtS;
 	private JButton btnRegistrar;
 
 	public Inicio() {
 		crearVentana();
 		crearCardLayout();
 
-		frame.getContentPane().add(cardPanel);		
+		frame.getContentPane().add(cardPanel);
 		frame.setVisible(true);
 
 	}
@@ -45,13 +44,53 @@ public class Inicio extends JFrame {
 	private void crearCardLayout() {
 		cardLayout = new CardLayout();
 		cardPanel = new JPanel(cardLayout);
-		System.out.println("First commit");
+
 		cardPanel.add(crearMenuPrincipal(), "PanelMenu");
-		cardPanel.add(crearPanelMantenimiento(), "PanelMantenimiento");		
+		cardPanel.add(crearPanelAlumno(), "PanelAlumno");
+		cardPanel.add(crearPanelMantenimiento(), "PanelMantenimiento");
 		cardPanel.add(crearPanelConsulta(), "PanelConsulta");
 		cardPanel.add(crearPanelRegistro(), "PanelRegistro");
 		cardPanel.add(crearPanelReporte(), "PanelReporte");
 		cardPanel.add(crearPanelListaRegistrados(), "PanelRegistrados");
+	}
+
+	private JPanel crearPanelMantenimiento() {
+		JPanel panelMantenimiento = new JPanel();
+		panelMantenimiento.setLayout(null);
+
+		JButton btnAtras = new JButton("ATRAS");
+		btnAtras.setBounds(32, 632, 113, 40);
+		panelMantenimiento.add(btnAtras);
+		btnAtras.addActionListener(e -> cardLayout.show(cardPanel, "PanelMenu"));
+
+		JButton btnRegistrarAlumno = new JButton("Agregar alumno");
+		btnRegistrarAlumno.setLocation(121, 113);
+		btnRegistrarAlumno.setSize(162, 56);
+		panelMantenimiento.add(btnRegistrarAlumno);
+		btnRegistrarAlumno.addActionListener(e -> cardLayout.show(cardPanel, "PanelAlumno"));
+
+		JButton btnConsultarAlumnos = new JButton("Consultar Alumnos");
+		btnConsultarAlumnos.setBounds(121, 218, 162, 56);
+		panelMantenimiento.add(btnConsultarAlumnos);
+		btnConsultarAlumnos.addActionListener(e -> cardLayout.show(cardPanel, "PanelRegistrados"));
+
+		JButton btnNewButton_2 = new JButton("Modificar Alumnos");
+		btnNewButton_2.setBounds(121, 320, 162, 49);
+		panelMantenimiento.add(btnNewButton_2);
+
+		JLabel lblAlumno = new JLabel("Alumno");
+		lblAlumno.setBounds(121, 49, 133, 14);
+		panelMantenimiento.add(lblAlumno);
+
+		JButton btnAgregarCurso = new JButton("Agregar Curso");
+		btnAgregarCurso.setBounds(526, 113, 152, 56);
+		panelMantenimiento.add(btnAgregarCurso);
+
+		JButton btnConsultarCursos = new JButton("Consultar Cursos");
+		btnConsultarCursos.setBounds(526, 218, 152, 56);
+		panelMantenimiento.add(btnConsultarCursos);
+
+		return panelMantenimiento;
 	}
 
 	private JPanel crearMenuPrincipal() {
@@ -80,12 +119,10 @@ public class Inicio extends JFrame {
 		return panelMenu;
 
 	}
-	
-	
 
-	private JPanel crearPanelMantenimiento() {
-		JPanel panelMantenimiento = new JPanel();
-		panelMantenimiento.setLayout(null);
+	private JPanel crearPanelAlumno() {
+		JPanel panelAlumno = new JPanel();
+		panelAlumno.setLayout(null);
 
 		JPanel panelDatos = new JPanel();
 		panelDatos.setBounds(24, 23, 1025, 230);
@@ -156,60 +193,57 @@ public class Inicio extends JFrame {
 		btnAtras.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnAtras.setLocation(10, 632);
 		btnAtras.setSize(120, 52);
-		
-		JButton btnListaRegistrados = new JButton("Consultar registrados");
-		btnListaRegistrados.setBounds(748, 632, 146, 23);
-		panelMantenimiento.add(btnListaRegistrados);
 
-
-		btnAtras.addActionListener(e -> cardLayout.show(cardPanel, "PanelMenu"));
+		btnAtras.addActionListener(e -> cardLayout.show(cardPanel, "PanelMantenimiento"));
 
 		btnRegistrar = new JButton("Agregar");
 		btnRegistrar.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnRegistrar.setBounds(742, 178, 126, 41);
 
 		panelDatos.add(btnRegistrar);
-		panelMantenimiento.add(panelDatos);
-		panelMantenimiento.add(btnAtras);
+		panelAlumno.add(panelDatos);
+		panelAlumno.add(btnAtras);
 
-		btnRegistrar.addActionListener(e -> registrarAlumno(txtNombre, txtApellidos,txtDNI,txtEdad, txtCelular,txtCodigo));
-		
+		btnRegistrar.addActionListener(
+				e -> registrarAlumno(txtNombre, txtApellidos, txtDNI, txtEdad, txtCelular, txtCodigo));
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(42, 299, 636, 236);
-		panelMantenimiento.add(scrollPane_1);
-		
+		panelAlumno.add(scrollPane_1);
+
 		txtS = new JTextArea();
 		scrollPane_1.setViewportView(txtS);
-		btnListaRegistrados.addActionListener(e -> cardLayout.show(cardPanel, "PanelRegistrados"));
-		
 
-		return panelMantenimiento;
+		return panelAlumno;
 	}
-	
-	
-	private void registrarAlumno(JTextField txtNombre, JTextField txtApellidos, JTextField txtDNI, JTextField txtEdad, JTextField txtCelular, JTextField txtCodigo) {
-		//Validacion de entrada de datos
-		if (txtNombre.getText().isEmpty() || txtApellidos.getText().isEmpty() ||txtDNI.getText().isEmpty() || txtEdad.getText().isEmpty() || txtCelular.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-	        return;
-		}
 
-		//Variables
+	private void registrarAlumno(JTextField txtNombre, JTextField txtApellidos, JTextField txtDNI, JTextField txtEdad,
+			JTextField txtCelular, JTextField txtCodigo) {
+		// Validacion de entrada de datos
+		if (txtNombre.getText().isEmpty() || txtApellidos.getText().isEmpty() || txtDNI.getText().isEmpty()
+				|| txtEdad.getText().isEmpty() || txtCelular.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+				
+		
+		// Variables
 		String nombres = txtNombre.getText();
 		String apellidos = txtApellidos.getText();
 		String dni = txtDNI.getText();
 		int edad = Integer.parseInt(txtEdad.getText());
-		int celular = Integer.parseInt(txtCelular.getText());		
-		
+		int celular = Integer.parseInt(txtCelular.getText());
+
 		Alumno nuevoAlumno = new Alumno(nombres, apellidos, dni, edad, celular, 0);
 		listaRegistro.agregarRegistro(nuevoAlumno);
+		actualizarTabla();
 
-		DefaultTableModel model = (DefaultTableModel) tablaAlumnos.getModel();
-		model.addRow(new Object[] { nuevoAlumno.getCodAlumno(), apellidos, nombres, edad, dni, celular });		
-		
-		JOptionPane.showMessageDialog(frame, "Alumno registrado: \n" + nombres + " " + apellidos, "Completo", javax.swing.JOptionPane.DEFAULT_OPTION) ;
-		
-		//Limpiar campos de texto
+		JOptionPane.showMessageDialog(frame, "Alumno registrado: \n" + nombres + " " + apellidos, "Completo",
+				JOptionPane.DEFAULT_OPTION);
+
+		// Limpiar campos de texto
 		txtNombre.setText("");
 		txtApellidos.setText("");
 		txtDNI.setText("");
@@ -218,19 +252,41 @@ public class Inicio extends JFrame {
 
 		// Actualizar codigo
 		txtCodigo.setText(String.valueOf(Alumno.getCodigoActual()));
-		
-		listaRegistro.mostrarRegistros(txtS);
-		
+
 	}
-	
+
+	private void actualizarTabla() {
+		DefaultTableModel model = (DefaultTableModel) tablaAlumnos.getModel();
+		model.setRowCount(0); // Limpia la tabla antes de actualizarla
+
+		for (Alumno alumno : listaRegistro.getRegistros()) {
+			model.addRow(new Object[] { alumno.getCodAlumno(), alumno.getApellidos(), alumno.getNombres(),
+					alumno.getEdad(), alumno.getDni(), alumno.getCelular(), alumno.getEstado() });
+		}
+	}
+
 	private JPanel crearPanelListaRegistrados() {
 		JPanel panelListaRegistrados = new JPanel();
 		panelListaRegistrados.setLayout(null);
 		
+		JButton btnAtras = new JButton("Atras");
+		btnAtras.setBounds(48, 643, 107, 31);
+		panelListaRegistrados.add(btnAtras);
+
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.setBounds(846, 48, 137, 44);
+		panelListaRegistrados.add(btnModificar);
+
+		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.setBounds(846, 119, 137, 44);
+		btnEliminar.setEnabled(false);
+		panelListaRegistrados.add(btnEliminar);
+		btnEliminar.addActionListener(e -> eliminarAlumno());
+		
 		tablaAlumnos = new JTable();
 		tablaAlumnos.setFont(new Font("Arial", Font.PLAIN, 12));
 		tablaAlumnos.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Codigo", "Apellidos", "Nombres", "Edad", "DNI", "Celular" }));
+				new String[] { "Codigo", "Apellidos", "Nombres", "Edad", "DNI", "Celular", "Estado" }));
 		tablaAlumnos.getColumnModel().getColumn(0).setPreferredWidth(65);
 		tablaAlumnos.getColumnModel().getColumn(0).setMinWidth(50);
 		tablaAlumnos.getColumnModel().getColumn(0).setMaxWidth(70);
@@ -239,19 +295,39 @@ public class Inicio extends JFrame {
 		tablaAlumnos.getColumnModel().getColumn(3).setPreferredWidth(55);
 		tablaAlumnos.getColumnModel().getColumn(3).setMinWidth(50);
 		tablaAlumnos.getColumnModel().getColumn(3).setMaxWidth(60);
-
+		
+		tablaAlumnos.setDefaultEditor(Object.class, null);
+		
+		tablaAlumnos.getSelectionModel().addListSelectionListener(e -> {
+			if (!e.getValueIsAdjusting()) {
+				btnEliminar.setEnabled(tablaAlumnos.getSelectedRow() >= 0);
+			}
+		});
+		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(35, 45, 913, 400);
+		scrollPane.setEnabled(false);
+		scrollPane.setBounds(35, 45, 755, 520);
 		scrollPane.setViewportView(tablaAlumnos);
 		panelListaRegistrados.add(scrollPane);
-		
-		JButton btnAtras = new JButton("Atras");
-		btnAtras.setBounds(48, 643, 107, 31);
-		panelListaRegistrados.add(btnAtras);		
-		
+
 		btnAtras.addActionListener(e -> cardLayout.show(cardPanel, "PanelMantenimiento"));
-		
+
 		return panelListaRegistrados;
+	}
+
+	private void eliminarAlumno() {
+		int filaSeleccionada = tablaAlumnos.getSelectedRow();
+		Alumno alumnoSeleccionado = listaRegistro.getRegistros().get(filaSeleccionada);
+		
+		int confirmacion = JOptionPane.showConfirmDialog(frame, "¿Está seguro de eliminar al alumno: " + alumnoSeleccionado.getApellidos() + " " + alumnoSeleccionado.getNombres() + " ?", "Confirmar eliminacion" , JOptionPane.OK_CANCEL_OPTION);
+			
+		if (confirmacion != JOptionPane.OK_OPTION) {
+			return;
+		}
+		
+		listaRegistro.eliminarRegistro(filaSeleccionada);
+		((DefaultTableModel) tablaAlumnos.getModel()).removeRow(filaSeleccionada);
+	
 	}
 
 	private JPanel crearPanelConsulta() {
@@ -306,8 +382,7 @@ public class Inicio extends JFrame {
 		btnAtras.addActionListener(e -> cardLayout.show(cardPanel, "PanelMenu"));
 
 		return panelReporte;
-	}	
-	
+	}
 
 	public static void main(String[] args) {
 		new Inicio();

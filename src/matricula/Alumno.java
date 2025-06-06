@@ -49,9 +49,6 @@ public class Alumno {
 		return codigoActual;
 	}
 
-	public static void setCodigoActual(int codigoActual) {
-		Alumno.codigoActual = codigoActual;
-	}
 
 	public void setCodAlumno(int codAlumno) {
 		this.codAlumno = codAlumno;

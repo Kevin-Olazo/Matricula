@@ -26,6 +26,7 @@ public class Inicio extends JFrame {
 	private JButton btnRegistrar;
 
 	public ListaRegistro listaRegistro = new ListaRegistro();
+	public ListaCursos listaCursos = new ListaCursos();
 
 	public Inicio() {
 		crearVentana();
@@ -53,8 +54,9 @@ public class Inicio extends JFrame {
 		cardPanel.add(crearPanelRegistro(), "PanelRegistro");
 		cardPanel.add(crearPanelReporte(), "PanelReporte");
 		cardPanel.add(crearPanelListaRegistrados(), "PanelRegistrados");
+		cardPanel.add(crearPanelCurso(), "PanelCurso");
 	}
-	
+
 	private JPanel crearMenuPrincipal() {
 		JPanel panelMenu = new JPanel();
 
@@ -113,6 +115,7 @@ public class Inicio extends JFrame {
 		JButton btnAgregarCurso = new JButton("Agregar Curso");
 		btnAgregarCurso.setBounds(526, 113, 152, 56);
 		panelMantenimiento.add(btnAgregarCurso);
+		btnAgregarCurso.addActionListener(e -> cardLayout.show(cardPanel, "PanelCurso"));
 
 		JButton btnConsultarCursos = new JButton("Consultar Cursos");
 		btnConsultarCursos.setBounds(526, 218, 152, 56);
@@ -120,8 +123,6 @@ public class Inicio extends JFrame {
 
 		return panelMantenimiento;
 	}
-
-
 
 	private JPanel crearPanelAlumno() {
 		JPanel panelAlumno = new JPanel();
@@ -220,7 +221,6 @@ public class Inicio extends JFrame {
 		return panelAlumno;
 	}
 
-	
 	private JFrame crearPanelModificar(Alumno alumno, int index) {
 		JFrame panelModificar = new JFrame();
 		panelModificar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -228,96 +228,94 @@ public class Inicio extends JFrame {
 		panelModificar.setLocationRelativeTo(frame);
 		panelModificar.setVisible(true);
 		panelModificar.getContentPane().setLayout(null);
-		
+
 		JButton btnCancelar = new JButton("CANCELAR");
 		btnCancelar.setBounds(451, 96, 156, 35);
 		panelModificar.getContentPane().add(btnCancelar);
 		btnCancelar.addActionListener(e -> dispose());
-		
+
 		JButton btnAceptar = new JButton("ACEPTAR");
 		btnAceptar.setBounds(451, 40, 156, 35);
-		panelModificar.getContentPane().add(btnAceptar);	
-				
+		panelModificar.getContentPane().add(btnAceptar);
+
 		JLabel lblApellidos = new JLabel("Apellidos:");
 		lblApellidos.setBounds(10, 40, 101, 14);
 		panelModificar.getContentPane().add(lblApellidos);
-		
+
 		JTextField txtApellidos = new JTextField();
 		txtApellidos.setBounds(10, 65, 116, 20);
 		panelModificar.getContentPane().add(txtApellidos);
 		txtApellidos.setColumns(10);
-		
+
 		JLabel lblNombres = new JLabel("Nombres:");
 		lblNombres.setBounds(10, 106, 46, 14);
 		panelModificar.getContentPane().add(lblNombres);
-		
+
 		JTextField txtNombres = new JTextField();
 		txtNombres.setBounds(10, 136, 86, 20);
 		panelModificar.getContentPane().add(txtNombres);
 		txtNombres.setColumns(10);
-		
+
 		JLabel lblEdad = new JLabel("Edad");
 		lblEdad.setBounds(159, 40, 60, 14);
 		panelModificar.getContentPane().add(lblEdad);
-		
+
 		JTextField txtEdad = new JTextField();
 		txtEdad.setBounds(159, 65, 46, 20);
 		panelModificar.getContentPane().add(txtEdad);
 		txtEdad.setColumns(10);
-		
+
 		JLabel lblCodigo = new JLabel("Codigo");
 		lblCodigo.setBounds(293, 40, 86, 14);
 		panelModificar.getContentPane().add(lblCodigo);
-		
+
 		JTextField txtCodigo = new JTextField();
 		txtCodigo.setEditable(false);
 		txtCodigo.setBounds(293, 65, 86, 20);
 		panelModificar.getContentPane().add(txtCodigo);
 		txtCodigo.setColumns(10);
-		
+
 		JLabel lblCelular = new JLabel("Celular");
 		lblCelular.setBounds(159, 106, 86, 14);
 		panelModificar.getContentPane().add(lblCelular);
-		
+
 		JTextField txtCelular = new JTextField();
 		txtCelular.setBounds(159, 143, 86, 20);
 		panelModificar.getContentPane().add(txtCelular);
 		txtCelular.setColumns(10);
-		
+
 		JLabel lblDNI = new JLabel("DNI");
 		lblDNI.setBounds(293, 106, 46, 14);
 		panelModificar.getContentPane().add(lblDNI);
-		
+
 		JTextField txtDNI = new JTextField();
 		txtDNI.setEditable(false);
 		txtDNI.setBounds(293, 143, 86, 20);
 		panelModificar.getContentPane().add(txtDNI);
-		txtDNI.setColumns(10);	
-		
+		txtDNI.setColumns(10);
+
 		txtNombres.setText(alumno.getNombres());
 		txtApellidos.setText(alumno.getApellidos());
 		txtEdad.setText(String.valueOf(alumno.getEdad()));
 		txtCelular.setText(String.valueOf(alumno.getCelular()));
 		txtDNI.setText(alumno.getDni());
-		
+
 		btnAceptar.addActionListener(e -> {
 			Alumno AlumnoModificar = listaRegistro.getRegistros().get(index);
 			AlumnoModificar.setApellidos(txtApellidos.getText());
 			AlumnoModificar.setNombres(txtNombres.getText());
 			AlumnoModificar.setEdad(Integer.valueOf(txtEdad.getText()));
 			AlumnoModificar.setCelular(Integer.valueOf(txtCelular.getText()));
-			
+
 			actualizarTabla();
-			
+
 		});
-		
+
 		btnCancelar.addActionListener(e -> panelModificar.dispose());
-		
-		
+
 		return panelModificar;
 	}
-	
-	
+
 	private JPanel crearPanelListaRegistrados() {
 		JPanel panelListaRegistrados = new JPanel();
 		panelListaRegistrados.setLayout(null);
@@ -329,7 +327,6 @@ public class Inicio extends JFrame {
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.setBounds(846, 48, 137, 44);
 		panelListaRegistrados.add(btnModificar);
-
 
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.setBounds(846, 119, 137, 44);
@@ -357,19 +354,19 @@ public class Inicio extends JFrame {
 				btnEliminar.setEnabled(tablaAlumnos.getSelectedRow() >= 0);
 			}
 		});
-		
+
 		btnModificar.addActionListener(e -> {
-			
+
 			if (tablaAlumnos.getRowCount() <= 0) {
 				JOptionPane.showMessageDialog(frame, "No hay alumnos", "Error", JOptionPane.OK_OPTION);
 				return;
 			}
-			
+
 			int filaSeleccionada = tablaAlumnos.getSelectedRow();
 			int index = filaSeleccionada;
 			Alumno alumnoSeleccionado = listaRegistro.getRegistros().get(filaSeleccionada);
 			crearPanelModificar(alumnoSeleccionado, index);
-			
+
 		});
 
 		scrollPane = new JScrollPane();
@@ -382,8 +379,8 @@ public class Inicio extends JFrame {
 
 		return panelListaRegistrados;
 	}
-	
-	private JPanel crearPanelConsulta() {	
+
+	private JPanel crearPanelConsulta() {
 		JPanel panelConsulta = new JPanel();
 		panelConsulta.setLayout(null);
 
@@ -436,7 +433,70 @@ public class Inicio extends JFrame {
 
 		return panelReporte;
 	}
-	
+
+	private JPanel crearPanelCurso() {
+		JPanel panelCurso = new JPanel();
+		panelCurso.setLayout(null);
+
+		JLabel lblNewLabel_2 = new JLabel("Codigo");
+		lblNewLabel_2.setBounds(34, 46, 146, 20);
+		panelCurso.add(lblNewLabel_2);
+
+		JTextField txtCodigo = new JTextField();
+		txtCodigo.setBounds(34, 77, 86, 20);
+		panelCurso.add(txtCodigo);
+		txtCodigo.setColumns(10);
+
+		JLabel lblNewLabel_3 = new JLabel("Asignatura");
+		lblNewLabel_3.setBounds(34, 127, 86, 20);
+		panelCurso.add(lblNewLabel_3);
+
+		JTextField txtAsignatura = new JTextField();
+		txtAsignatura.setBounds(34, 171, 86, 20);
+		panelCurso.add(txtAsignatura);
+		txtAsignatura.setColumns(10);
+
+		JLabel lblNewLabel_4 = new JLabel("Ciclo");
+		lblNewLabel_4.setBounds(329, 49, 127, 20);
+		panelCurso.add(lblNewLabel_4);
+
+		JTextField txtCiclo = new JTextField();
+		txtCiclo.setBounds(316, 77, 86, 20);
+		panelCurso.add(txtCiclo);
+		txtCiclo.setColumns(10);
+
+		JLabel lblNewLabel_5 = new JLabel("Numero de creditos");
+		lblNewLabel_5.setBounds(316, 130, 140, 17);
+		panelCurso.add(lblNewLabel_5);
+
+		JTextField txtCreditos = new JTextField();
+		txtCreditos.setBounds(316, 171, 86, 20);
+		panelCurso.add(txtCreditos);
+		txtCreditos.setColumns(10);
+
+		JLabel lblNewLabel_6 = new JLabel("Cantidad de Horas:");
+		lblNewLabel_6.setBounds(512, 49, 127, 14);
+		panelCurso.add(lblNewLabel_6);
+
+		JTextField txtHoras = new JTextField();
+		txtHoras.setBounds(512, 77, 127, 20);
+		panelCurso.add(txtHoras);
+		txtHoras.setColumns(10);
+
+		JButton btnAtras = new JButton("ATRAS");
+		btnAtras.setBounds(31, 363, 113, 31);
+		panelCurso.add(btnAtras);
+		btnAtras.addActionListener(e -> cardLayout.show(cardPanel, "PanelMantenimiento"));
+
+		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.setLocation(707, 69);
+		btnAgregar.setSize(127, 37);
+		panelCurso.add(btnAgregar);
+		btnAgregar.addActionListener(e -> registrarCurso(txtAsignatura, txtCodigo, txtCiclo, txtCreditos, txtHoras));
+
+		return panelCurso;
+	}
+
 	private void registrarAlumno(JTextField txtNombre, JTextField txtApellidos, JTextField txtDNI, JTextField txtEdad,
 			JTextField txtCelular, JTextField txtCodigo) {
 		// Validacion de entrada de datos
@@ -473,6 +533,31 @@ public class Inicio extends JFrame {
 
 	}
 
+	private void registrarCurso(JTextField txtAsignatura, JTextField txtCodigo, JTextField txtCiclo,
+			JTextField txtCreditos, JTextField txtHoras) {
+		// Validacion de entrada de datos
+		if (txtCodigo.getText().isEmpty() || txtAsignatura.getText().isEmpty() || txtCiclo.getText().isEmpty()
+				|| txtCreditos.getText().isEmpty() || txtHoras.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		// Variables
+		String asignatura = txtAsignatura.getText();
+		int codigo = Integer.valueOf(txtCodigo.getText());
+		int ciclo = Integer.valueOf(txtCiclo.getText());
+		int creditos = Integer.valueOf(txtCreditos.getText());
+		int horas = Integer.valueOf(txtHoras.getText());
+
+		Curso nuevoCurso = new Curso(asignatura, codigo, ciclo, creditos, horas);
+		listaCursos.agregarCurso(nuevoCurso);
+
+		JOptionPane.showMessageDialog(frame, "Nuevo curso agregado: \n" + asignatura, "Completo",
+				JOptionPane.DEFAULT_OPTION);
+
+	}
+
 	private void actualizarTabla() {
 		DefaultTableModel model = (DefaultTableModel) tablaAlumnos.getModel();
 		model.setRowCount(0); // Limpia la tabla antes de actualizarla
@@ -482,7 +567,6 @@ public class Inicio extends JFrame {
 					alumno.getEdad(), alumno.getDni(), alumno.getCelular(), alumno.getEstado() });
 		}
 	}
-
 
 	private void eliminarAlumno() {
 		int filaSeleccionada = tablaAlumnos.getSelectedRow();
@@ -501,8 +585,6 @@ public class Inicio extends JFrame {
 		((DefaultTableModel) tablaAlumnos.getModel()).removeRow(filaSeleccionada);
 
 	}
-
-
 
 	public static void main(String[] args) {
 		new Inicio();

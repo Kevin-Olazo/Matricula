@@ -3,8 +3,12 @@ package matricula;
 import java.util.ArrayList;
 
 public class ListaCursos {
-	private ArrayList<Curso> cursos = new ArrayList<>();
+	private ArrayList<Curso> cursos;
 
+	public ListaCursos() {
+		this.cursos = new ArrayList<>();
+	}
+	
 	
 	public void agregarCurso(Curso curso) {
 		cursos.add(curso);

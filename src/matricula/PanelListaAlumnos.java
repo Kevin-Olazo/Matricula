@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class PanelListaAlumnos extends JPanel{
-	private ListaAlumnos listaRegistro;
+	private ListaAlumnos listaAlumnos;
 	private Inicio parentFrame;
 	private CardLayout layout;
 	private JPanel cardPanel;
@@ -25,7 +25,7 @@ public class PanelListaAlumnos extends JPanel{
 	public PanelListaAlumnos(CardLayout layout, JPanel cardPanel, ListaAlumnos listaRegistro, Inicio parentFrame) {
 		this.layout = layout;
 		this.cardPanel = cardPanel;
-		this.listaRegistro = listaRegistro;
+		this.listaAlumnos = listaRegistro;
 		this.parentFrame = parentFrame;
 				
 		setLayout(null);
@@ -81,7 +81,7 @@ public class PanelListaAlumnos extends JPanel{
 
 			int filaSeleccionada = tablaAlumnos.getSelectedRow();
 			int index = filaSeleccionada;
-			Alumno alumnoSeleccionado = listaRegistro.getRegistros().get(filaSeleccionada);
+			Alumno alumnoSeleccionado = listaAlumnos.getRegistros().get(filaSeleccionada);
 			crearPanelModificar(alumnoSeleccionado, index);
 
 		}); 
@@ -99,7 +99,7 @@ public class PanelListaAlumnos extends JPanel{
 	public void actualizarTabla() {
 	    modelAlumnos.setRowCount(0); 
 
-	    for (Alumno x : listaRegistro.getRegistros()) {
+	    for (Alumno x : listaAlumnos.getRegistros()) {
 	        modelAlumnos.addRow(new Object[] {
 	            x.getCodAlumno(),
 	            x.getApellidos(),
@@ -114,7 +114,7 @@ public class PanelListaAlumnos extends JPanel{
 	
 	private void eliminarAlumno() {
 		int filaSeleccionada = tablaAlumnos.getSelectedRow();
-		Alumno alumnoSeleccionado = listaRegistro.getRegistros().get(filaSeleccionada);
+		Alumno alumnoSeleccionado = listaAlumnos.getRegistros().get(filaSeleccionada);
 
 		int confirmacion = JOptionPane.showConfirmDialog(this,
 				"¿Está seguro de eliminar al alumno: " + alumnoSeleccionado.getApellidos() + " "
@@ -125,7 +125,7 @@ public class PanelListaAlumnos extends JPanel{
 			return;
 		}
 
-		listaRegistro.eliminarRegistro(filaSeleccionada);
+		listaAlumnos.eliminarRegistro(filaSeleccionada);
 		((DefaultTableModel) tablaAlumnos.getModel()).removeRow(filaSeleccionada);
 
 	}
@@ -134,6 +134,7 @@ public class PanelListaAlumnos extends JPanel{
 		JFrame panelModificar = new JFrame();
 		panelModificar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		panelModificar.setSize(653, 255);
+		panelModificar.setLocationRelativeTo(parentFrame);
 		panelModificar.setVisible(true);
 		panelModificar.getContentPane().setLayout(null);
 
@@ -210,7 +211,7 @@ public class PanelListaAlumnos extends JPanel{
 		txtDNI.setText(alumno.getDni());
 
 		btnAceptar.addActionListener(e -> {
-			Alumno AlumnoModificar = listaRegistro.getRegistros().get(index);
+			Alumno AlumnoModificar = listaAlumnos.getRegistros().get(index);
 			AlumnoModificar.setApellidos(txtApellidos.getText());
 			AlumnoModificar.setNombres(txtNombres.getText());
 			AlumnoModificar.setEdad(Integer.valueOf(txtEdad.getText()));

@@ -15,7 +15,6 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JRadioButton;
 
 public class Inicio extends JFrame {
 
@@ -24,13 +23,13 @@ public class Inicio extends JFrame {
 	private JFrame frame;
 	private CardLayout cardLayout;
 	private PanelListaAlumnos panelListaAlumnos;
+	private PanelListaCursos panelListaCursos;
 
-	private JScrollPane scrollPane;
-	
-	private JTable tablaAlumnos;
+	private JScrollPane scrollPane;	
+
 	private JTable tablaCursos;
 
-	public ListaAlumnos listaRegistro = new ListaAlumnos();
+	public ListaAlumnos listaAlumnos = new ListaAlumnos();
 	public ListaCursos listaCursos = new ListaCursos();
 
 	public Inicio() {
@@ -51,22 +50,21 @@ public class Inicio extends JFrame {
 	private void crearCardLayout() {
 		cardLayout = new CardLayout();
 		cardPanel = new JPanel(cardLayout);
-
 		cardPanel.add(crearMenuPrincipal(), "PanelMenu");
-		cardPanel.add(new PanelAlumno(cardLayout, cardPanel, listaRegistro, this), "PanelAlumno");	
+		cardPanel.add(new PanelAlumno(cardLayout, cardPanel, listaAlumnos, this), "PanelAlumno");	
+		cardPanel.add(new PanelCurso(cardLayout, cardPanel, listaCursos, this), "PanelCurso");
 		cardPanel.add(new PanelMantenimiento(cardLayout, cardPanel,this), "PanelMantenimiento");
 		cardPanel.add(crearPanelConsulta(), "PanelConsulta");
 		cardPanel.add(crearPanelRegistro(), "PanelRegistro");
 		cardPanel.add(crearPanelReporte(), "PanelReporte");
-		panelListaAlumnos = new PanelListaAlumnos(cardLayout, cardPanel, listaRegistro, this);
+		panelListaAlumnos = new PanelListaAlumnos(cardLayout, cardPanel, listaAlumnos, this);
 		cardPanel.add(panelListaAlumnos, "PanelListaAlumnos");
-		cardPanel.add(crearPanelCurso(), "PanelCurso");
-		cardPanel.add(crearPanelListaCursos(), "PanelListaCursos");
+		panelListaCursos = new PanelListaCursos(cardLayout, cardPanel, listaCursos, this);
+		cardPanel.add(panelListaCursos, "PanelListaCursos");
+		
 	}
 	
-	public PanelListaAlumnos getPanelListaAlumnos() {
-	    return panelListaAlumnos;
-	}
+
 
 	private JPanel crearMenuPrincipal() {
 		JPanel panelMenu = new JPanel();
@@ -93,59 +91,9 @@ public class Inicio extends JFrame {
 
 		return panelMenu;
 
-	}
-		
+	}	
 	
-	private JPanel crearPanelListaCursos() {
-		JPanel panelListaCursos = new JPanel();
-		panelListaCursos.setLayout(null);
-		
-		JButton btnAtras = new JButton("Atras");
-		btnAtras.setBounds(48, 643, 107, 31);
-		panelListaCursos.add(btnAtras);
-
-		JButton btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(846, 48, 137, 44);
-		panelListaCursos.add(btnModificar);
-
-		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(846, 119, 137, 44);
-		btnEliminar.setEnabled(false);
-		panelListaCursos.add(btnEliminar);	
-
-		tablaCursos = new JTable();
-		tablaCursos.setFont(new Font("Arial", Font.PLAIN, 12));
-		tablaCursos.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Codigo", "Asignatura", "Nombres", "Edad", "DNI", "Celular", "Estado" }));
-		tablaCursos.getColumnModel().getColumn(0).setPreferredWidth(65);
-		tablaCursos.getColumnModel().getColumn(0).setMinWidth(50);
-		tablaCursos.getColumnModel().getColumn(0).setMaxWidth(70);
-		tablaCursos.getColumnModel().getColumn(1).setPreferredWidth(100);
-		tablaCursos.getColumnModel().getColumn(2).setPreferredWidth(100);
-		tablaCursos.getColumnModel().getColumn(3).setPreferredWidth(55);
-		tablaCursos.getColumnModel().getColumn(3).setMinWidth(50);
-		tablaCursos.getColumnModel().getColumn(3).setMaxWidth(60);
-
-		tablaCursos.setDefaultEditor(Object.class, null);
-
-		tablaCursos.getSelectionModel().addListSelectionListener(e -> {
-			if (!e.getValueIsAdjusting()) {
-				btnEliminar.setEnabled(tablaCursos.getSelectedRow() >= 0);
-			}
-		});
-
-		
-		scrollPane = new JScrollPane();
-		scrollPane.setEnabled(false);
-		scrollPane.setBounds(35, 45, 755, 520);
-		scrollPane.setViewportView(tablaCursos);
-		panelListaCursos.add(scrollPane);
-		
-		btnAtras.addActionListener(e -> cardLayout.show(cardPanel, "PanelMantenimiento"));
-		
-		return panelListaCursos;
-	}
-
+	
 	private JPanel crearPanelConsulta() {
 		JPanel panelConsulta = new JPanel();
 		panelConsulta.setLayout(null);
@@ -290,15 +238,6 @@ public class Inicio extends JFrame {
 
 	}
 
-	public void actualizarTablaAlumnos() {
-		DefaultTableModel model = (DefaultTableModel) tablaAlumnos.getModel();
-		model.setRowCount(0); // Limpia la tabla antes de actualizarla
-
-		for (Alumno alumno : listaRegistro.getRegistros()) {
-			model.addRow(new Object[] { alumno.getCodAlumno(), alumno.getApellidos(), alumno.getNombres(),
-					alumno.getEdad(), alumno.getDni(), alumno.getCelular(), alumno.getEstado() });
-		}
-	}
 	
 	public void actualizarTablaCursos() {
 		DefaultTableModel model = (DefaultTableModel) tablaCursos.getModel();
@@ -312,5 +251,9 @@ public class Inicio extends JFrame {
 	public static void main(String[] args) {
 		 EventQueue.invokeLater(() -> new Inicio());		
 		
+	}
+	
+	public PanelListaAlumnos getPanelListaAlumnos() {
+	    return panelListaAlumnos;
 	}
 }

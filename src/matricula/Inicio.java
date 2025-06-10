@@ -30,7 +30,7 @@ public class Inicio extends JFrame {
 	private JTable tablaAlumnos;
 	private JTable tablaCursos;
 
-	public ListaRegistro listaRegistro = new ListaRegistro();
+	public ListaAlumnos listaRegistro = new ListaAlumnos();
 	public ListaCursos listaCursos = new ListaCursos();
 
 	public Inicio() {

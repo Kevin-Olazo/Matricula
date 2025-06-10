@@ -13,14 +13,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class PanelAlumno extends JPanel {
-	private ListaRegistro listaRegistro;
+	private ListaAlumnos listaRegistro;
 	private CardLayout layout;
 	private JPanel cardPanel;
 	private Inicio parentFrame;
 	private JTextField txtNombre, txtApellidos, txtDNI, txtEdad, txtCelular, txtCodigo;
 	private JButton btnRegistrar, btnAtras;
 
-	public PanelAlumno(CardLayout layout, JPanel cardPanel, ListaRegistro listaRegistro, Inicio parentFrame) {
+	public PanelAlumno(CardLayout layout, JPanel cardPanel, ListaAlumnos listaRegistro, Inicio parentFrame) {
 		this.listaRegistro = listaRegistro;
 		this.layout = layout;
 		this.cardPanel = cardPanel;

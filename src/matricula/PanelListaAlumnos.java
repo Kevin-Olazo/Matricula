@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class PanelListaAlumnos extends JPanel{
-	private ListaRegistro listaRegistro;
+	private ListaAlumnos listaRegistro;
 	private Inicio parentFrame;
 	private CardLayout layout;
 	private JPanel cardPanel;
@@ -22,7 +22,7 @@ public class PanelListaAlumnos extends JPanel{
 	private DefaultTableModel modelAlumnos;
 	private JButton btnAtras, btnModificar, btnEliminar;
 	
-	public PanelListaAlumnos(CardLayout layout, JPanel cardPanel, ListaRegistro listaRegistro, Inicio parentFrame) {
+	public PanelListaAlumnos(CardLayout layout, JPanel cardPanel, ListaAlumnos listaRegistro, Inicio parentFrame) {
 		this.layout = layout;
 		this.cardPanel = cardPanel;
 		this.listaRegistro = listaRegistro;

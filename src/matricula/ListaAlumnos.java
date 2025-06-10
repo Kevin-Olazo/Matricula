@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import javax.swing.JTextArea;
 
-public class ListaRegistro {
+public class ListaAlumnos {
 	private ArrayList<Alumno> registros;;
 	
-	public ListaRegistro() {
+	public ListaAlumnos() {
 		this.registros = new ArrayList<>();
 	}
 

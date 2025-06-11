@@ -39,10 +39,6 @@ public class PanelMantenimiento extends JPanel {
 		this.add(btnConsultarAlumnos);
 		btnConsultarAlumnos.addActionListener(e -> layout.show(cardPanel, "PanelListaAlumnos"));
 
-		JButton btnModificar = new JButton("Modificar Alumnos");
-		btnModificar.setBounds(121, 320, 162, 49);
-		this.add(btnModificar);
-
 		JLabel lblAlumno = new JLabel("Alumno");
 		lblAlumno.setBounds(121, 49, 133, 14);
 		this.add(lblAlumno);

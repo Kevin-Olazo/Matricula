@@ -45,27 +45,29 @@ public class Inicio extends JFrame {
 		frame = new JFrame("Menu Principal");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1086, 746);
+		frame.setLocationRelativeTo(null);
 	}
 
 	private void crearCardLayout() {
 		cardLayout = new CardLayout();
-		cardPanel = new JPanel(cardLayout);
+		cardPanel = new JPanel(cardLayout);				
+		
 		cardPanel.add(crearMenuPrincipal(), "PanelMenu");
 		cardPanel.add(new PanelAlumno(cardLayout, cardPanel, listaAlumnos, this), "PanelAlumno");	
 		cardPanel.add(new PanelCurso(cardLayout, cardPanel, listaCursos, this), "PanelCurso");
 		cardPanel.add(new PanelMantenimiento(cardLayout, cardPanel,this), "PanelMantenimiento");
-		cardPanel.add(crearPanelConsulta(), "PanelConsulta");
-		cardPanel.add(crearPanelRegistro(), "PanelRegistro");
-		cardPanel.add(crearPanelReporte(), "PanelReporte");
+		cardPanel.add(new PanelRegistro(cardLayout, cardPanel,this), "PanelRegistro");
+		cardPanel.add(new PanelMatricula(cardLayout, cardPanel,listaAlumnos,listaCursos, this), "PanelMatricula");
+		cardPanel.add(new PanelRetiro(cardLayout, cardPanel,listaAlumnos,listaCursos, this), "PanelRetiro");
+		cardPanel.add(new PanelConsulta(cardLayout, cardPanel, this), "PanelConsulta");
+		cardPanel.add(new PanelReporte(cardLayout, cardPanel, this), "PanelReporte");	
+						
 		panelListaAlumnos = new PanelListaAlumnos(cardLayout, cardPanel, listaAlumnos, this);
 		cardPanel.add(panelListaAlumnos, "PanelListaAlumnos");
 		panelListaCursos = new PanelListaCursos(cardLayout, cardPanel, listaCursos, this);
-		cardPanel.add(panelListaCursos, "PanelListaCursos");
-		
+		cardPanel.add(panelListaCursos, "PanelListaCursos");		
 	}
 	
-
-
 	private JPanel crearMenuPrincipal() {
 		JPanel panelMenu = new JPanel();
 
@@ -92,162 +94,8 @@ public class Inicio extends JFrame {
 		return panelMenu;
 
 	}	
+			
 	
-	
-	private JPanel crearPanelConsulta() {
-		JPanel panelConsulta = new JPanel();
-		panelConsulta.setLayout(null);
-
-		JButton btnNewButton = new JButton("Consultar");
-		btnNewButton.setBounds(24, 40, 137, 37);
-		panelConsulta.add(btnNewButton);
-
-		JButton btnAtras = new JButton("ATRAS");
-		btnAtras.setBounds(28, 469, 118, 43);
-		panelConsulta.add(btnAtras);
-
-		btnAtras.addActionListener(e -> cardLayout.show(cardPanel, "PanelMenu"));
-
-		return panelConsulta;
-
-	}
-
-	private JPanel crearPanelRegistro() {
-		JPanel panelRegistro = new JPanel();
-		panelRegistro.setLayout(null);
-
-		JButton btnAtras = new JButton("ATRAS");
-		btnAtras.setBounds(28, 469, 118, 43);
-		panelRegistro.add(btnAtras);
-
-		JLabel lblNewLabel = new JLabel("REGISTRO");
-		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel.setBounds(381, 46, 198, 43);
-		panelRegistro.add(lblNewLabel);
-
-		btnAtras.addActionListener(e -> cardLayout.show(cardPanel, "PanelMenu"));
-
-		return panelRegistro;
-	}
-
-	private JPanel crearPanelReporte() {
-		JPanel panelReporte = new JPanel();
-		panelReporte.setLayout(null);
-
-		JButton btnAtras = new JButton("ATRAS");
-		btnAtras.setBounds(28, 469, 118, 43);
-		panelReporte.add(btnAtras);
-
-		JLabel lblNewLabel_1 = new JLabel("REPORTE");
-		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(314, 39, 232, 54);
-		panelReporte.add(lblNewLabel_1);
-
-		btnAtras.addActionListener(e -> cardLayout.show(cardPanel, "PanelMenu"));
-
-		return panelReporte;
-	}
-
-	private JPanel crearPanelCurso() {
-		JPanel panelCurso = new JPanel();
-		panelCurso.setLayout(null);
-
-		JLabel lblNewLabel_2 = new JLabel("Codigo");
-		lblNewLabel_2.setBounds(34, 46, 146, 20);
-		panelCurso.add(lblNewLabel_2);
-
-		JTextField txtCodigo = new JTextField();
-		txtCodigo.setBounds(34, 77, 86, 20);
-		panelCurso.add(txtCodigo);
-		txtCodigo.setColumns(10);
-
-		JLabel lblNewLabel_3 = new JLabel("Asignatura");
-		lblNewLabel_3.setBounds(34, 127, 86, 20);
-		panelCurso.add(lblNewLabel_3);
-
-		JTextField txtAsignatura = new JTextField();
-		txtAsignatura.setBounds(34, 171, 86, 20);
-		panelCurso.add(txtAsignatura);
-		txtAsignatura.setColumns(10);
-
-		JLabel lblNewLabel_4 = new JLabel("Ciclo");
-		lblNewLabel_4.setBounds(329, 49, 127, 20);
-		panelCurso.add(lblNewLabel_4);
-
-		JComboBox txtCiclo = new JComboBox();
-		txtCiclo.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5"}));
-		txtCiclo.setBounds(316, 77, 86, 20);
-		panelCurso.add(txtCiclo);
-
-
-		JLabel lblNewLabel_5 = new JLabel("Numero de creditos");
-		lblNewLabel_5.setBounds(316, 130, 140, 17);
-		panelCurso.add(lblNewLabel_5);
-
-		JTextField txtCreditos = new JTextField();
-		txtCreditos.setBounds(316, 171, 86, 20);
-		panelCurso.add(txtCreditos);
-		txtCreditos.setColumns(10);
-
-		JLabel lblNewLabel_6 = new JLabel("Cantidad de Horas:");
-		lblNewLabel_6.setBounds(512, 49, 127, 14);
-		panelCurso.add(lblNewLabel_6);
-
-		JTextField txtHoras = new JTextField();
-		txtHoras.setBounds(512, 77, 127, 20);
-		panelCurso.add(txtHoras);
-		txtHoras.setColumns(10);
-
-		JButton btnAtras = new JButton("ATRAS");
-		btnAtras.setBounds(31, 363, 113, 31);
-		panelCurso.add(btnAtras);
-		btnAtras.addActionListener(e -> cardLayout.show(cardPanel, "PanelMantenimiento"));
-
-		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.setLocation(707, 69);
-		btnAgregar.setSize(127, 37);
-		panelCurso.add(btnAgregar);
-		btnAgregar.addActionListener(e -> registrarCurso(txtAsignatura, txtCiclo,txtCodigo, txtCreditos, txtHoras));
-
-		return panelCurso;
-	}
-
-	
-	private void registrarCurso(JTextField txtAsignatura, JComboBox txtCodigo, JTextField txtCiclo,
-			JTextField txtCreditos, JTextField txtHoras) {
-		// Validacion de entrada de datos
-		if (txtAsignatura.getText().isEmpty() || txtCiclo.getText().isEmpty()
-				|| txtCreditos.getText().isEmpty() || txtHoras.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos", "Error",
-					JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-
-		// Variables
-		String asignatura = txtAsignatura.getText();
-		int codigo = txtCodigo.getSelectedIndex();
-		int ciclo = Integer.valueOf(txtCiclo.getText());
-		int creditos = Integer.valueOf(txtCreditos.getText());
-		int horas = Integer.valueOf(txtHoras.getText());
-
-		Curso nuevoCurso = new Curso(asignatura, codigo, ciclo, creditos, horas);
-		listaCursos.agregarCurso(nuevoCurso);
-
-		JOptionPane.showMessageDialog(frame, "Nuevo curso agregado: \n" + asignatura, "Completo",
-				JOptionPane.DEFAULT_OPTION);
-
-	}
-
-	
-	public void actualizarTablaCursos() {
-		DefaultTableModel model = (DefaultTableModel) tablaCursos.getModel();
-		model.setRowCount(0);
-		
-		for (Curso curso : listaCursos.getCursos()) {
-			model.addRow(new Object[] {curso.getAsignatura(), curso.getCodCurso(), curso.getCiclo(), curso.getCreditos(), curso.getHoras()});
-		}
-	}
-
 	public static void main(String[] args) {
 		 EventQueue.invokeLater(() -> new Inicio());		
 		
@@ -255,5 +103,9 @@ public class Inicio extends JFrame {
 	
 	public PanelListaAlumnos getPanelListaAlumnos() {
 	    return panelListaAlumnos;
+	}
+	
+	public PanelListaCursos getPanelListaCursos() {
+	    return panelListaCursos;
 	}
 }

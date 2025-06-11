@@ -13,7 +13,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class PanelListaAlumnos extends JPanel{
+public class PanelListaAlumnos extends JPanel {
 	private ListaAlumnos listaAlumnos;
 	private Inicio parentFrame;
 	private CardLayout layout;
@@ -21,18 +21,18 @@ public class PanelListaAlumnos extends JPanel{
 	private JTable tablaAlumnos;
 	private DefaultTableModel modelAlumnos;
 	private JButton btnAtras, btnModificar, btnEliminar;
-	
+
 	public PanelListaAlumnos(CardLayout layout, JPanel cardPanel, ListaAlumnos listaRegistro, Inicio parentFrame) {
 		this.layout = layout;
 		this.cardPanel = cardPanel;
 		this.listaAlumnos = listaRegistro;
 		this.parentFrame = parentFrame;
-				
+
 		setLayout(null);
 		crearInterfaz();
-		
+
 	}
-	
+
 	private void crearInterfaz() {
 		this.setLayout(null);
 		btnAtras = new JButton("Atras");
@@ -47,12 +47,11 @@ public class PanelListaAlumnos extends JPanel{
 		btnEliminar.setBounds(846, 119, 137, 44);
 		btnEliminar.setEnabled(false);
 		this.add(btnEliminar);
-		btnEliminar.addActionListener(e -> eliminarAlumno());		
-		
-		modelAlumnos = new DefaultTableModel(
-				new Object [][] {},
-				new String [] {"Codigo", "Apellidos", "Nombres", "Edad", "DNI", "Celular", "Estado"});								
-				
+		btnEliminar.addActionListener(e -> eliminarAlumno());
+
+		modelAlumnos = new DefaultTableModel(new Object[][] {},
+				new String[] { "Codigo", "Apellidos", "Nombres", "Edad", "DNI", "Celular", "Estado" });
+
 		tablaAlumnos = new JTable(modelAlumnos);
 		tablaAlumnos.setFont(new Font("Arial", Font.PLAIN, 12));
 		tablaAlumnos.setDefaultEditor(Object.class, null);
@@ -64,7 +63,6 @@ public class PanelListaAlumnos extends JPanel{
 		tablaAlumnos.getColumnModel().getColumn(3).setPreferredWidth(55);
 		tablaAlumnos.getColumnModel().getColumn(3).setMinWidth(50);
 		tablaAlumnos.getColumnModel().getColumn(3).setMaxWidth(60);
-
 
 		tablaAlumnos.getSelectionModel().addListSelectionListener(e -> {
 			if (!e.getValueIsAdjusting()) {
@@ -84,7 +82,7 @@ public class PanelListaAlumnos extends JPanel{
 			Alumno alumnoSeleccionado = listaAlumnos.getRegistros().get(filaSeleccionada);
 			crearPanelModificar(alumnoSeleccionado, index);
 
-		}); 
+		});
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setEnabled(false);
@@ -95,23 +93,16 @@ public class PanelListaAlumnos extends JPanel{
 		btnAtras.addActionListener(e -> layout.show(cardPanel, "PanelMantenimiento"));
 		actualizarTabla();
 	}
-	
-	public void actualizarTabla() {
-	    modelAlumnos.setRowCount(0); 
 
-	    for (Alumno x : listaAlumnos.getRegistros()) {
-	        modelAlumnos.addRow(new Object[] {
-	            x.getCodAlumno(),
-	            x.getApellidos(),
-	            x.getNombres(),
-	            x.getEdad(),
-	            x.getDni(),
-	            x.getCelular(),
-	            x.getEstado()
-	        });
-	    }
+	public void actualizarTabla() {
+		modelAlumnos.setRowCount(0);
+
+		for (Alumno x : listaAlumnos.getRegistros()) {
+			modelAlumnos.addRow(new Object[] { x.getCodAlumno(), x.getApellidos(), x.getNombres(), x.getEdad(),
+					x.getDni(), x.getCelular(), x.getEstado() });
+		}
 	}
-	
+
 	private void eliminarAlumno() {
 		int filaSeleccionada = tablaAlumnos.getSelectedRow();
 		Alumno alumnoSeleccionado = listaAlumnos.getRegistros().get(filaSeleccionada);
@@ -129,9 +120,9 @@ public class PanelListaAlumnos extends JPanel{
 		((DefaultTableModel) tablaAlumnos.getModel()).removeRow(filaSeleccionada);
 
 	}
-	
+
 	private JFrame crearPanelModificar(Alumno alumno, int index) {
-		JFrame panelModificar = new JFrame();
+		JFrame panelModificar = new JFrame("Modificar datos de alumno");
 		panelModificar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		panelModificar.setSize(653, 255);
 		panelModificar.setLocationRelativeTo(parentFrame);
@@ -211,6 +202,20 @@ public class PanelListaAlumnos extends JPanel{
 		txtDNI.setText(alumno.getDni());
 
 		btnAceptar.addActionListener(e -> {
+			if (txtApellidos.getText().isEmpty() || txtNombres.getText().isEmpty() || txtEdad.getText().isEmpty()
+					|| txtCelular.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(parentFrame, "Por favor, complete todos los campos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			int confirmacion = JOptionPane.showConfirmDialog(parentFrame, "Esta seguro de hacer cambios?", "Advenrtencia",
+					JOptionPane.YES_NO_OPTION);
+			
+			if (confirmacion != JOptionPane.YES_OPTION) {
+				return;
+			}
+
 			Alumno AlumnoModificar = listaAlumnos.getRegistros().get(index);
 			AlumnoModificar.setApellidos(txtApellidos.getText());
 			AlumnoModificar.setNombres(txtNombres.getText());
@@ -223,6 +228,5 @@ public class PanelListaAlumnos extends JPanel{
 
 		btnCancelar.addActionListener(e -> panelModificar.dispose());
 		return panelModificar;
-
-}
+	}
 }

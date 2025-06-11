@@ -34,7 +34,7 @@ public class PanelAlumno extends JPanel {
 	private void crearInterfaz() {
 		this.setLayout(null);
 
-		JLabel lblNombres = new JLabel("Nombres: ");
+		JLabel lblNombres = new JLabel("Nombres:");
 		lblNombres.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblNombres.setBounds(10, 60, 107, 33);
 		this.add(lblNombres);

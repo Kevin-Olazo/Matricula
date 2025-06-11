@@ -5,6 +5,7 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -27,6 +28,7 @@ public class PanelCurso extends JPanel {
 		this.listaCursos = listaCursos;
 		this.parentFrame = parentFrame;
 
+		setLayout(null);
 		crearInterfaz();
 
 	}
@@ -39,10 +41,9 @@ public class PanelCurso extends JPanel {
 		this.add(lblCodigo);
 
 		txtCodigo = new JTextField();
-		txtCodigo.setBounds(30, 180, 86, 20);
+		txtCodigo.setBounds(30, 83, 86, 20);
 		txtCodigo.setColumns(10);
 		this.add(txtCodigo);
-
 
 		JLabel lblAsignatura = new JLabel("Asignatura: ");
 		lblAsignatura.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -50,7 +51,7 @@ public class PanelCurso extends JPanel {
 		this.add(lblAsignatura);
 
 		txtAsignatura = new JTextField();
-		txtAsignatura.setBounds(30, 83, 86, 20);
+		txtAsignatura.setBounds(30, 180, 86, 20);
 		this.add(txtAsignatura);
 		txtAsignatura.setColumns(10);
 		
@@ -92,6 +93,7 @@ public class PanelCurso extends JPanel {
 		btnAgregar.setLocation(430, 80);
 		btnAgregar.setSize(82, 26);
 		this.add(btnAgregar);
+		btnAgregar.addActionListener(e-> registrarCurso());
 		
 		btnAtras = new JButton();
 		btnAtras.setText("Atras");
@@ -100,5 +102,30 @@ public class PanelCurso extends JPanel {
 		this.add(btnAtras);		
 		btnAtras.addActionListener(e -> layout.show(cardPanel, "PanelMantenimiento"));
 	}
+	
+	public void registrarCurso() {
+		if (txtAsignatura.getText().isEmpty() || txtCreditos.getText().isEmpty() || txtHoras.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(parentFrame, "Por favor, complete todos los campos", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		// Variables
+		String asignatura = txtAsignatura.getText();
+		int codigo = Integer.valueOf(txtCodigo.getText());
+		int ciclo = Integer.valueOf(cboCiclo.getSelectedIndex());
+		int creditos = Integer.valueOf(txtCreditos.getText());
+		int horas = Integer.valueOf(txtHoras.getText());
+
+		Curso nuevoCurso = new Curso(asignatura, codigo, ciclo, creditos, horas);
+		listaCursos.agregarCurso(nuevoCurso);
+
+		JOptionPane.showMessageDialog(parentFrame, "Nuevo curso agregado: \n" + asignatura, "Completo",
+				JOptionPane.DEFAULT_OPTION);
+		
+		parentFrame.getPanelListaCursos().actualizarTabla();
+	}
+	
+	
 
 }

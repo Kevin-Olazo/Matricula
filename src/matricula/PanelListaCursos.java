@@ -47,7 +47,7 @@ public class PanelListaCursos extends JPanel{
 		btnEliminar.setBounds(846, 119, 137, 44);
 		btnEliminar.setEnabled(false);
 		this.add(btnEliminar);
-		btnEliminar.addActionListener(e -> eliminarAlumno());		
+		btnEliminar.addActionListener(e -> eliminarCurso());		
 		
 		modelCursos = new DefaultTableModel(
 				new Object [][] {},
@@ -65,12 +65,15 @@ public class PanelListaCursos extends JPanel{
 		tablaCursos.getColumnModel().getColumn(3).setMinWidth(110);
 		tablaCursos.getColumnModel().getColumn(3).setMaxWidth(125);
 
-
 		tablaCursos.getSelectionModel().addListSelectionListener(e -> {
 			if (!e.getValueIsAdjusting()) {
 				btnEliminar.setEnabled(tablaCursos.getSelectedRow() >= 0);
 			}
 		});
+		
+		tablaCursos.getTableHeader().setResizingAllowed(false);
+		tablaCursos.getTableHeader().setReorderingAllowed(false);
+		
 
 		btnModificar.addActionListener(e -> {
 
@@ -101,21 +104,23 @@ public class PanelListaCursos extends JPanel{
 
 	    for (Curso x : listaCursos.getCursos()) {
 	    	modelCursos.addRow(new Object[] {
+	    			x.getCodCurso(),
 		            x.getAsignatura(),
+		            x.getCiclo(),
 		            x.getCreditos(),
 		            x.getHoras(),
-		            x.getCodCurso()
+		            
 	        });
 	    }
 	}
 	
-	private void eliminarAlumno() {
+	private void eliminarCurso() {
 		int filaSeleccionada = tablaCursos.getSelectedRow();
-		Curso alumnoSeleccionado = listaCursos.getCursos().get(filaSeleccionada);
+		Curso cursoSeleccionado = listaCursos.getCursos().get(filaSeleccionada);
 
 		int confirmacion = JOptionPane.showConfirmDialog(this,
-				"¿Está seguro de eliminar el curso: " + alumnoSeleccionado.getAsignatura() + " "
-						+ alumnoSeleccionado.getCodCurso() + " ?",
+				"¿Está seguro de eliminar el curso: " + cursoSeleccionado.getAsignatura() + " "
+						+ cursoSeleccionado.getCodCurso() + " ?",
 				"Confirmar eliminacion", JOptionPane.OK_CANCEL_OPTION);
 
 		if (confirmacion != JOptionPane.OK_OPTION) {
@@ -186,8 +191,7 @@ public class PanelListaCursos extends JPanel{
 		panelModificar.getContentPane().add(lblHoras);
 
 		JTextField txtHoras = new JTextField();
-		txtHoras.setEditable(false);
-		txtHoras.setBounds(293, 143, 86, 20);
+				txtHoras.setBounds(293, 143, 86, 20);
 		panelModificar.getContentPane().add(txtHoras);
 		txtHoras.setColumns(10);
 
@@ -198,6 +202,22 @@ public class PanelListaCursos extends JPanel{
 		txtCodigo.setText(String.valueOf(curso.getCodCurso()));
 
 		btnAceptar.addActionListener(e -> {
+			
+			if (txtAsignatura.getText().isEmpty() || txtCiclo.getText().isEmpty() || txtCreditos.getText().isEmpty()
+					|| txtHoras.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(parentFrame, "Por favor, complete todos los campos", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			int confirmacion = JOptionPane.showConfirmDialog(parentFrame, "Esta seguro de hacer cambios?", "Advertencia",
+					JOptionPane.YES_NO_OPTION);
+			
+			if (confirmacion != JOptionPane.YES_OPTION) {
+				return;
+			}
+						
+			
 			Curso cursoModificar = listaCursos.getCursos().get(index);
 			cursoModificar.setAsignatura(String.valueOf(txtAsignatura));
 			cursoModificar.setCiclo(Integer.valueOf(txtCiclo.getText()));

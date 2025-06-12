@@ -35,7 +35,7 @@ public class Inicio extends JFrame {
 	public Inicio() {
 		crearVentana();
 		crearCardLayout();
-
+		agregarAlumnos();
 		frame.getContentPane().add(cardPanel);
 		frame.setVisible(true);
 
@@ -101,6 +101,35 @@ public class Inicio extends JFrame {
 		
 	}
 	
+	private void agregarAlumnos() {
+		
+			Alumno Alumno1 = new Alumno("Pepa","Pig","8974512", 8, 8487544, 0);
+			Alumno Alumno2 = new Alumno("Pablito","Backyardigan","554512", 12, 4524455, 0);			
+			Alumno Alumno4 = new Alumno("Jesus","Lujan Carrion","8974512", 30, 98989, 0);
+			Alumno Alumno3 = new Alumno("Tyrone","Backyardigan","45645", 24, 942522, 0);
+			Alumno Alumno5 = new Alumno("Dina","Boluarte","78965", 18, 6987544, 0);
+			Alumno Alumno6 = new Alumno("Christian","Cueva","457885", 15, 28724, 0);
+			Alumno Alumno7 = new Alumno("Christian","Dominguez","368345", 22, 567852, 0);
+			Alumno Alumno8 = new Alumno("Christian","Meier","36897", 26, 78942, 0);
+			Alumno Alumno9 = new Alumno("Jose","Perez","97867689", 15, 945342, 0);
+			Alumno Alumno10 = new Alumno("Jesus","Perez","795785", 20, 2456348, 0);
+			
+			listaAlumnos.agregarRegistro(Alumno10);
+			listaAlumnos.agregarRegistro(Alumno7);
+			listaAlumnos.agregarRegistro(Alumno1);
+			listaAlumnos.agregarRegistro(Alumno3);
+			listaAlumnos.agregarRegistro(Alumno8);
+			listaAlumnos.agregarRegistro(Alumno9);
+			listaAlumnos.agregarRegistro(Alumno2);
+			listaAlumnos.agregarRegistro(Alumno4);			
+			listaAlumnos.agregarRegistro(Alumno5);
+			listaAlumnos.agregarRegistro(Alumno6);
+			
+
+			
+	        
+	    
+	}
 	public PanelListaAlumnos getPanelListaAlumnos() {
 	    return panelListaAlumnos;
 	}

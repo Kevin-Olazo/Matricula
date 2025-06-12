@@ -2,8 +2,6 @@ package matricula;
 
 import java.util.ArrayList;
 
-import javax.swing.JTextArea;
-
 public class ListaAlumnos {
 	private ArrayList<Alumno> registros;;
 	
@@ -21,5 +19,15 @@ public class ListaAlumnos {
 	
 	public void eliminarRegistro(int index) {
 		registros.remove(index);
+	}
+	
+	public Alumno buscarCodigo(int codigo) {
+		for (Alumno a : registros) {
+			if (a.getCodAlumno() == codigo){
+				return a;
+			}
+		}
+		
+		return null;
 	}
 }

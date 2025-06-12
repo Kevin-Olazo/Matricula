@@ -209,18 +209,23 @@ public class PanelListaAlumnos extends JPanel {
 				return;
 			}
 
-			int confirmacion = JOptionPane.showConfirmDialog(parentFrame, "Esta seguro de hacer cambios?", "Advenrtencia",
+			int confirmacion = JOptionPane.showConfirmDialog(parentFrame, "Esta seguro de hacer cambios?", "Advertencia",
 					JOptionPane.YES_NO_OPTION);
 			
 			if (confirmacion != JOptionPane.YES_OPTION) {
 				return;
 			}
 
-			Alumno AlumnoModificar = listaAlumnos.getRegistros().get(index);
-			AlumnoModificar.setApellidos(txtApellidos.getText());
-			AlumnoModificar.setNombres(txtNombres.getText());
-			AlumnoModificar.setEdad(Integer.valueOf(txtEdad.getText()));
-			AlumnoModificar.setCelular(Integer.valueOf(txtCelular.getText()));
+			int codigo = Integer.parseInt(txtCodigo.getText());
+			Alumno AlumnoModificar = listaAlumnos.buscarCodigo(codigo);
+			if (AlumnoModificar != null) {
+			    AlumnoModificar.setApellidos(txtApellidos.getText());
+			    AlumnoModificar.setNombres(txtNombres.getText());
+			    AlumnoModificar.setEdad(Integer.parseInt(txtEdad.getText()));
+			    AlumnoModificar.setCelular(Integer.parseInt(txtCelular.getText()));
+			    actualizarTabla();
+			    panelModificar.dispose();
+			}
 
 			actualizarTabla();
 

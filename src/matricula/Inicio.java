@@ -25,17 +25,18 @@ public class Inicio extends JFrame {
 	private PanelListaAlumnos panelListaAlumnos;
 	private PanelListaCursos panelListaCursos;
 
-	private JScrollPane scrollPane;	
+	private JScrollPane scrollPane;
 
 	private JTable tablaCursos;
 
 	public ListaAlumnos listaAlumnos = new ListaAlumnos();
 	public ListaCursos listaCursos = new ListaCursos();
+	private ListaMatriculas listaMatriculas = new ListaMatriculas();
 
 	public Inicio() {
 		crearVentana();
-		crearCardLayout();
-		agregarAlumnos();
+		agregar();
+		crearCardLayout();		
 		frame.getContentPane().add(cardPanel);
 		frame.setVisible(true);
 
@@ -50,24 +51,24 @@ public class Inicio extends JFrame {
 
 	private void crearCardLayout() {
 		cardLayout = new CardLayout();
-		cardPanel = new JPanel(cardLayout);				
-		
+		cardPanel = new JPanel(cardLayout);
+
 		cardPanel.add(crearMenuPrincipal(), "PanelMenu");
-		cardPanel.add(new PanelAlumno(cardLayout, cardPanel, listaAlumnos, this), "PanelAlumno");	
+		cardPanel.add(new PanelAlumno(cardLayout, cardPanel, listaAlumnos, this), "PanelAlumno");
 		cardPanel.add(new PanelCurso(cardLayout, cardPanel, listaCursos, this), "PanelCurso");
-		cardPanel.add(new PanelMantenimiento(cardLayout, cardPanel,this), "PanelMantenimiento");
-		cardPanel.add(new PanelRegistro(cardLayout, cardPanel,this), "PanelRegistro");
-		cardPanel.add(new PanelMatricula(cardLayout, cardPanel,listaAlumnos,listaCursos, this), "PanelMatricula");
-		cardPanel.add(new PanelRetiro(cardLayout, cardPanel,listaAlumnos,listaCursos, this), "PanelRetiro");
+		cardPanel.add(new PanelMantenimiento(cardLayout, cardPanel, this), "PanelMantenimiento");
+		cardPanel.add(new PanelRegistro(cardLayout, cardPanel, this), "PanelRegistro");
+		cardPanel.add(new PanelMatricula(cardLayout, cardPanel, listaAlumnos, listaCursos, listaMatriculas, this), "PanelMatricula");
+		cardPanel.add(new PanelRetiro(cardLayout, cardPanel, listaAlumnos, listaCursos, this), "PanelRetiro");
 		cardPanel.add(new PanelConsulta(cardLayout, cardPanel, this), "PanelConsulta");
-		cardPanel.add(new PanelReporte(cardLayout, cardPanel, this), "PanelReporte");	
-						
+		cardPanel.add(new PanelReporte(cardLayout, cardPanel, this), "PanelReporte");
+
 		panelListaAlumnos = new PanelListaAlumnos(cardLayout, cardPanel, listaAlumnos, this);
 		cardPanel.add(panelListaAlumnos, "PanelListaAlumnos");
 		panelListaCursos = new PanelListaCursos(cardLayout, cardPanel, listaCursos, this);
-		cardPanel.add(panelListaCursos, "PanelListaCursos");		
+		cardPanel.add(panelListaCursos, "PanelListaCursos");
 	}
-	
+
 	private JPanel crearMenuPrincipal() {
 		JPanel panelMenu = new JPanel();
 
@@ -93,48 +94,57 @@ public class Inicio extends JFrame {
 
 		return panelMenu;
 
-	}	
-			
-	
-	public static void main(String[] args) {
-		 EventQueue.invokeLater(() -> new Inicio());		
-		
 	}
-	
-	private void agregarAlumnos() {
-		
-			Alumno Alumno1 = new Alumno("Pepa","Pig","8974512", 8, 8487544, 0);
-			Alumno Alumno2 = new Alumno("Pablito","Backyardigan","554512", 12, 4524455, 0);			
-			Alumno Alumno4 = new Alumno("Jesus","Lujan Carrion","8974512", 30, 98989, 0);
-			Alumno Alumno3 = new Alumno("Tyrone","Backyardigan","45645", 24, 942522, 0);
-			Alumno Alumno5 = new Alumno("Dina","Boluarte","78965", 18, 6987544, 0);
-			Alumno Alumno6 = new Alumno("Christian","Cueva","457885", 15, 28724, 0);
-			Alumno Alumno7 = new Alumno("Christian","Dominguez","368345", 22, 567852, 0);
-			Alumno Alumno8 = new Alumno("Christian","Meier","36897", 26, 78942, 0);
-			Alumno Alumno9 = new Alumno("Jose","Perez","97867689", 15, 945342, 0);
-			Alumno Alumno10 = new Alumno("Jesus","Perez","795785", 20, 2456348, 0);
-			
-			listaAlumnos.agregarRegistro(Alumno10);
-			listaAlumnos.agregarRegistro(Alumno7);
-			listaAlumnos.agregarRegistro(Alumno1);
-			listaAlumnos.agregarRegistro(Alumno3);
-			listaAlumnos.agregarRegistro(Alumno8);
-			listaAlumnos.agregarRegistro(Alumno9);
-			listaAlumnos.agregarRegistro(Alumno2);
-			listaAlumnos.agregarRegistro(Alumno4);			
-			listaAlumnos.agregarRegistro(Alumno5);
-			listaAlumnos.agregarRegistro(Alumno6);
-			
 
-			
-	        
-	    
+	public static void main(String[] args) {
+		EventQueue.invokeLater(() -> new Inicio());
+
 	}
+
+	private void agregar() {
+
+		Alumno Alumno1 = new Alumno("Jesus", "Perez", "795785", 20, 2456348, 0);		
+		Alumno Alumno2 = new Alumno("Pablito", "Backyardigan", "554512", 12, 4524455, 0);
+		Alumno Alumno3 = new Alumno("Christian", "Meier", "36897", 26, 78942, 0);
+		Alumno Alumno4 = new Alumno("Jesus", "Lujan Carrion", "8974512", 30, 98989, 0);
+		Alumno Alumno5 = new Alumno("Dina", "Boluarte", "78965", 18, 6987544, 0);
+		Alumno Alumno6 = new Alumno("Christian", "Cueva", "457885", 15, 28724, 0);
+		Alumno Alumno7 = new Alumno("Tyrone", "Backyardigan", "45645", 24, 942522, 0);		
+		Alumno Alumno8 = new Alumno("Jose", "Perez", "97867689", 15, 945342, 0);
+		Alumno Alumno9 = new Alumno("Christian", "Dominguez", "368345", 22, 567852, 0);
+		Alumno Alumno10 = new Alumno("Pepa", "Pig", "8974512", 8, 8487544, 0);
+
+		listaAlumnos.agregarRegistro(Alumno1);
+		listaAlumnos.agregarRegistro(Alumno2);
+		listaAlumnos.agregarRegistro(Alumno3);
+		listaAlumnos.agregarRegistro(Alumno4);
+		listaAlumnos.agregarRegistro(Alumno5);
+		listaAlumnos.agregarRegistro(Alumno6);
+		listaAlumnos.agregarRegistro(Alumno7);
+		listaAlumnos.agregarRegistro(Alumno8);
+		listaAlumnos.agregarRegistro(Alumno9);
+		listaAlumnos.agregarRegistro(Alumno10);
+		
+		Curso curso1 = new Curso("Algoritmo", 4001, 0, 20, 30);
+		Curso curso2 = new Curso("Matematica", 6051, 1, 18, 20);
+		Curso curso3 = new Curso("Base de datos", 3002, 0, 14, 30);
+		Curso curso4 = new Curso("Modelado de negocios", 4003, 2, 22, 30);
+		Curso curso5 = new Curso("Psicologia", 5008, 3, 16, 50);
+		
+		listaCursos.agregarCurso(curso1);
+		listaCursos.agregarCurso(curso2);
+		listaCursos.agregarCurso(curso3);
+		listaCursos.agregarCurso(curso4);
+		listaCursos.agregarCurso(curso5);
+
+
+	}
+
 	public PanelListaAlumnos getPanelListaAlumnos() {
-	    return panelListaAlumnos;
+		return panelListaAlumnos;
 	}
-	
+
 	public PanelListaCursos getPanelListaCursos() {
-	    return panelListaCursos;
+		return panelListaCursos;
 	}
 }

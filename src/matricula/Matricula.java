@@ -2,7 +2,7 @@ package matricula;
 
 public class Matricula {
 	
-	private int codAlumno, codCurso;
+	private int codAlumno, codCurso, codMatricula;
 	private String fecha, hora;
 	
 
@@ -17,9 +17,21 @@ public class Matricula {
 		this.codCurso = codCurso;
 		this.fecha = fecha;
 		this.hora = hora;
+		this.codMatricula = numMATRICULA;
 		numMATRICULA++;
 		
 	}
+
+	
+	public int getCodMatricula() {
+		return codMatricula;
+	}
+
+
+	public void setCodMatricula(int codMatricula) {
+		this.codMatricula = codMatricula;
+	}
+
 
 	public int getCodAlumno() {
 		return codAlumno;
